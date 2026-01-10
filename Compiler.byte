@@ -1,0 +1,20 @@
+FUNCTION compile_engcode(file):
+    lines = READ_LINES(file)
+    bytecode = []
+
+    FOR line IN lines:
+        line = line.TRIM().UPPER()
+        IF line STARTS WITH "P\"":
+            text = line.REMOVE_PREFIX("P\"").REMOVE_SUFFIX("\"")
+            bytecode.APPEND([01, LENGTH(text), text])
+        ELSE IF line == "PLAYER":
+            bytecode.APPEND([03])
+        ELSE IF line == "ENEMY":
+            bytecode.APPEND([04])
+        ELSE IF line IN ENG_WORDS_JSON:
+            word_id = ENG_WORDS_JSON_INDEX(line)
+            bytecode.APPEND([10, word_id])
+        ELSE:
+            ERROR("Unknown token: " + line)
+
+    RETURN bytecode
