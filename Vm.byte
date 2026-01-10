@@ -1,0 +1,16 @@
+FUNCTION run_bytecode(bytecode):
+    objects = []
+
+    FOR instr IN bytecode:
+        IF instr[0] == 01:          # PRINT
+            PRINT instr[2]
+        ELSE IF instr[0] == 03:     # PLAYER
+            objects.APPEND({name:"PLAYER", x:RANDOM(), y:RANDOM()})
+            PRINT("Created PLAYER")
+        ELSE IF instr[0] == 04:     # ENEMY
+            objects.APPEND({name:"ENEMY", x:RANDOM(), y:RANDOM()})
+            PRINT("Created ENEMY")
+        ELSE IF instr[0] == 10:     # ENGWORD
+            word_name = ENG_WORDS_JSON[instr[1]]
+            objects.APPEND({name:word_name, x:RANDOM(), y:RANDOM()})
+            PRINT("Created object: " + word_name)
